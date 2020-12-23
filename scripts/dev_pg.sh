@@ -1,0 +1,1 @@
+docker run --rm --name=homehandy_pg -d -e POSTGRES_USER=hhdbuser -e POSTGRES_PASS=localpwd1 -e POSTGRES_DB=homehandy_local -e PGDATA=/var/lib/postgresql/data -p 5444:5432 --tmpfs /var/lib/postgresql/data mdillon/postgis && sleep 5;

@@ -1,0 +1,70 @@
+{
+  "name": "homehandy-api",
+  "version": "0.0.42",
+  "description": "Home Handy API using Nodejs and Postgres",
+  "main": "index.js",
+  "engines": {
+    "node": "12.11.1"
+  },
+  "scripts": {
+    "start": "forever index.js",
+    "dev": "./scripts/dev_pg.sh; NODE_ENV=localhost nodemon index.js",
+    "clean": "./scripts/dev_cleanup.sh;",
+    "debug": "node --inspect=5000 index.js",
+    "test": "./scripts/dev_pg.sh; NODE_ENV=localhost ALLOW_CONFIG_MUTATIONS=true tape ./tests/ | tap-spec",
+    "tests": "npm run test",
+    "coverage": "NODE_ENV=localhost ALLOW_CONFIG_MUTATIONS=true tap ./tests/index.js --coverage-report=lcov",
+    "versionPatch": "npm version --no-git-tag-version patch",
+    "commitToRepo": "babel-node ./scripts/commitToRepo.js",
+    "removeNodeModules": "babel-node ./scripts/removeNodeModules.js",
+    "commit": "npm run versionPatch && npm run commitToRepo",
+    "db:rollback": "knex migrate:rollback",
+    "doBefore": "npm run commit && npm run removeNodeModules",
+    "deploy": "npm run deploy:dev",
+    "deploy:dev": "npm run doBefore && eb deploy Lifeplane-Dev --profile lifeplane && npm run doAfter",
+    "deploy:prod": "eb deploy Lifeplane-Prod --profile lifeplane",
+    "doAfter": "npm install",
+    "eb:dev": "NODE_ENV=dev forever index.js",
+    "eb:prod": "NODE_ENV=prod forever index.js"
+  },
+  "author": "Sharatoga",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@sendgrid/mail": "^7.0.0",
+    "argon2-pass": "^1.0.2",
+    "body-parser": "^1.19.0",
+    "cloudinary": "^1.21.0",
+    "config": "^3.3.1",
+    "cors": "^2.8.5",
+    "date-fns": "^2.11.1",
+    "express": "^4.17.1",
+    "express-mung": "^0.5.1",
+    "express-ws": "^4.0.0",
+    "forever": "^2.0.0",
+    "helmet": "^3.22.0",
+    "knex": "^0.20.13",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.2",
+    "multer-storage-cloudinary": "^2.2.1",
+    "passport": "^0.4.1",
+    "passport-json": "^1.2.0",
+    "pg": "^8.2.0",
+    "stripe": "^8.67.0",
+    "superagent": "^5.2.2"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "nodemon": "^2.0.4",
+    "simple-git": "^1.132.0",
+    "supertest": "^4.0.2",
+    "tap": "^14.10.7",
+    "tap-spec": "^5.0.0",
+    "tape-async": "^2.3.0"
+  },
+  "bit": {
+    "env": {},
+    "componentsDefaultDirectory": "components/{name}",
+    "packageManager": "npm"
+  }
+}

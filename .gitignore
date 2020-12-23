@@ -1,0 +1,19 @@
+node_modules
+.DS_Store
+.awsConfig.json
+*.pem
+
+config/dev.js
+config/localhost.js
+config/test.js
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
+
+coverage
+.nyc_output
+.elasticbeanstalk
+
+.vscode
